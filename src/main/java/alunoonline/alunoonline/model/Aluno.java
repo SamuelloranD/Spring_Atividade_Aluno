@@ -19,6 +19,8 @@ public class Aluno {
 
     private String email;
 
+    // Não funcionou com a anotaçao Data
+    
     public String getNome() {
         return nome;
     }
