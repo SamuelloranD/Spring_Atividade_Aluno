@@ -36,4 +36,20 @@ public class AlunoService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Aluno não encontrado");
         }
     }
+
+    public void atualizarAlunoPorId(Long id, Aluno aluno) {
+        Optional<Aluno> alunoDoBancoDeDados = buscarAlunoPorId(id);
+        if (alunoDoBancoDeDados.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "Aluno não encontrado no banco de dados");
+        }
+
+        Aluno alunoParaEditar = alunoDoBancoDeDados.get();
+
+        alunoParaEditar.setNome(aluno.getNome());
+        alunoParaEditar.setCpf(aluno.getCpf());
+        alunoParaEditar.setEmail(aluno.getEmail());
+        alunoParaEditar.setId(aluno.getId());
+        alunoRepository.save(alunoParaEditar);
+    }
 }
