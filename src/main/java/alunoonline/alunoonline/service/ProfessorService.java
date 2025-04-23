@@ -1,5 +1,6 @@
 package alunoonline.alunoonline.service;
 
+import alunoonline.alunoonline.model.Aluno;
 import alunoonline.alunoonline.model.Professor;
 import alunoonline.alunoonline.repository.ProfessorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,5 +37,21 @@ public class ProfessorService {
         else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Professor não encontrado");
         }
+    }
+
+    public void atualizarProfessorPorId(Long id, Professor professor) {
+        Optional<Professor> professorDoBancoDeDados = buscarProfessorPorId(id);
+        if (professorDoBancoDeDados.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "Professor não encontrado no banco de dados");
+        }
+
+        Professor professorParaEditar = professorDoBancoDeDados.get();
+
+        professorParaEditar.setNome(professor.getNome());
+        professorParaEditar.setCpf(professor.getCpf());
+        professorParaEditar.setEmail(professor.getEmail());
+        professorParaEditar.setId(professor.getId());
+        professorRepository.save(professorParaEditar);
     }
 }

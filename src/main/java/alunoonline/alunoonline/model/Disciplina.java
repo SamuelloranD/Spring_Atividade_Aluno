@@ -3,14 +3,16 @@ package alunoonline.alunoonline.model;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "aluno")
 @Data
+@Table(name = "disciplina")
 @Entity
-public class Aluno {
+public class Disciplina {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,9 +20,11 @@ public class Aluno {
 
     private String nome;
 
-    private String cpf;
+    private Integer cargaHoraria;
 
-    private String email;
+    @ManyToOne
+    @JoinColumn(name = "professor_id")
+    private Professor professor;
 
     public Long getId() {
         return id;
@@ -38,19 +42,11 @@ public class Aluno {
         this.nome = nome;
     }
 
-    public String getCpf() {
-        return cpf;
+    public Integer getCargaHoraria() {
+        return cargaHoraria;
     }
 
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public void setCargaHoraria(Integer cargaHoraria) {
+        this.cargaHoraria = cargaHoraria;
     }
 }

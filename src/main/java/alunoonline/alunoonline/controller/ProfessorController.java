@@ -1,5 +1,6 @@
 package alunoonline.alunoonline.controller;
 
+import alunoonline.alunoonline.model.Aluno;
 import alunoonline.alunoonline.model.Professor;
 import alunoonline.alunoonline.service.ProfessorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,5 +39,12 @@ public class ProfessorController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deletarProfessorPorId(@PathVariable Long id) {
         professorService.deletarProfessorPorId(id);
+    }
+
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void atualizarProfessorPorId(@PathVariable Long id,
+                                    @RequestBody Professor professor) {
+        professorService.atualizarProfessorPorId(id, professor);
     }
 }
