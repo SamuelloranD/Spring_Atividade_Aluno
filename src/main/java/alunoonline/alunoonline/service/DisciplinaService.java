@@ -19,7 +19,40 @@ public class DisciplinaService {
     @Autowired
     DisciplinaRepository disciplinaRepository;
 
-    public Disciplina criarDisciplina(Disciplina disciplina) {
-        return disciplinaRepository.save(disciplina);
+    public void criarDisciplina(Disciplina disciplina){
+        disciplinaRepository.save(disciplina);
+
+    }
+
+    public List<Disciplina> listarTodasDisciplinas(){
+        return disciplinaRepository.findAll();
+    }
+
+    public Optional<Disciplina> buscarDisciplinaPorId(Long id){
+        return disciplinaRepository.findById(id);
+    }
+
+    public void deletarDisciplinaPorId(Long id){
+        Optional<Disciplina> disciplina = disciplinaRepository.findById(id);
+        if (disciplina.isPresent()){
+            disciplinaRepository.deleteById(id);
+        }else{
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Não encontrado a disciplina");
+        }
+    }
+
+    public void atualizarDisciplinaPorId(Long id, Disciplina disciplina){
+        Optional<Disciplina> disciplinaDoBancoDeDados = buscarDisciplinaPorId(id);
+
+        if (disciplinaDoBancoDeDados.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Disciplina não encontrada no Banco de Dados");
+        }
+
+        Disciplina disciplinaParaEditar = disciplinaDoBancoDeDados.get();
+
+        disciplinaParaEditar.setNome(disciplina.getNome());
+        disciplinaParaEditar.setCargaHoraria(disciplina.getCargaHoraria());
+
+        disciplinaRepository.save(disciplinaParaEditar);
     }
 }

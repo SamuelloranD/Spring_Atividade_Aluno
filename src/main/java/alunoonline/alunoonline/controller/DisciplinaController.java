@@ -20,7 +20,32 @@ public class DisciplinaController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void criarDisciplina(@RequestBody Disciplina disciplina) {
+    public void criarDisciplina(@RequestBody Disciplina disciplina){
         disciplinaService.criarDisciplina(disciplina);
+    }
+
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public List<Disciplina> listarTodasDisciplinas(){
+        return disciplinaService.listarTodasDisciplinas();
+    }
+
+    @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Optional<Disciplina> buscarDisciplinaPorId(@PathVariable Long id){
+        return disciplinaService.buscarDisciplinaPorId(id);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deletarDisciplinaPorId(@PathVariable long id){
+        disciplinaService.deletarDisciplinaPorId(id);
+    }
+
+
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void atualizarDisciplinaPorId(@PathVariable Long id, @RequestBody Disciplina disciplina) {
+        disciplinaService.atualizarDisciplinaPorId(id, disciplina);
     }
 }
