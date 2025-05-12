@@ -45,5 +45,7 @@ Postman atualizarDisciplinaPorId:
 DBeaver atualizarDisciplinaPorId:
 ![image](https://github.com/user-attachments/assets/8b29fe1b-fe68-457d-9ef3-a8c4c91f4d00)
 
+Swagger trancarMatricula
+![image](https://github.com/user-attachments/assets/b3fbfb7c-4318-4d6e-b207-5983f56129ac)
 
 
