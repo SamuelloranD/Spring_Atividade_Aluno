@@ -1,5 +1,6 @@
 package alunoonline.alunoonline.service;
 
+import alunoonline.alunoonline.dtos.AtualizarNotasRequestDTO;
 import alunoonline.alunoonline.enums.MatriculaAlunoStatusEnum;
 import alunoonline.alunoonline.model.MatriculaAluno;
 import alunoonline.alunoonline.repository.MatriculaAlunoRepository;
@@ -10,6 +11,9 @@ import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class MatriculaAlunoService {
+
+    private static final Double MEDIA_PARA_APROVACAO = 7.0;
+    private static final Integer QTD_NOTAS = 2;
 
     @Autowired
     MatriculaAlunoRepository matriculaAlunoRepository;
@@ -35,6 +39,36 @@ public class MatriculaAlunoService {
         } else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     "Só é possível trancar com o status MATRICULADO");
+        }
+    }
+
+    public void atualizarNotas(Long matriculaAlunoId, AtualizarNotasRequestDTO atualizarNotasRequestDTO) {
+        MatriculaAluno matriculaAluno = buscarMatriculaOuLancarExcecao(matriculaAlunoId);
+
+        if (atualizarNotasRequestDTO.getNota1() != null) {
+            matriculaAluno.setNota1(atualizarNotasRequestDTO.getNota1());
+        }
+        if (atualizarNotasRequestDTO.getNota2() != null) {
+            matriculaAluno.setNota2(atualizarNotasRequestDTO.getNota2());
+        }
+
+        calcularMediaEModificarStatus(matriculaAluno);
+        matriculaAlunoRepository.save(matriculaAluno);
+
+    }
+
+    private MatriculaAluno buscarMatriculaOuLancarExcecao(Long matriculaAlunoId) {
+        return matriculaAlunoRepository.findById(matriculaAlunoId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Matrícula do Aluno não encontrada"));
+    }
+
+    private void calcularMediaEModificarStatus(MatriculaAluno matriculaAluno) {
+        Double nota1 = matriculaAluno.getNota1();
+        Double nota2 = matriculaAluno.getNota2();
+
+        if (nota1 != null && nota2 != null) {
+            Double media = (nota1 + nota2) / QTD_NOTAS;
+            matriculaAluno.setStatus(media >= MEDIA_PARA_APROVACAO ? MatriculaAlunoStatusEnum.APROVADO : MatriculaAlunoStatusEnum.REPROVADO);
         }
     }
 }
