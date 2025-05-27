@@ -48,21 +48,16 @@ http://localhost:8080/swagger-ui/index.html
 
 O arquivo de testes para o Postman está incluído na raiz do projeto com o nome:
 
-collection_insomnia.json
+[Alunos_Casa.postman_collection.json](Alunos_Casa.postman_collection.json)collection_insomnia.json
 
 
-Você pode importá-lo diretamente no Insomnia para testar todos os endpoints da API.
+Você pode importá-lo diretamente no Postman para testar todos os endpoints da API.
 
 ## Banco de Dados (PostgreSQL)
 
 O dump (export) do banco de dados PostgreSQL está incluído na raiz com o nome:
 
-banco_postgres.sql
-
-Você pode importá-lo no **pgAdmin** ou utilizar a CLI do PostgreSQL:
-
-bash
-psql -U seu_usuario -d nome_do_banco -f banco_postgres.sql
+[dump-aluno_online_casa-202505270019.sql](dump-aluno_online_casa-202505270019.sql)banco_postgres.sql
 
 ------------------------------------
 
