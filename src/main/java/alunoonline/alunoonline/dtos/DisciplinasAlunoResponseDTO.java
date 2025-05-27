@@ -61,5 +61,6 @@ public class DisciplinasAlunoResponseDTO {
     }
 
     public void setStatus(MatriculaAlunoStatusEnum status) {
+        this.matriculaAlunoStatusEnum = status;
     }
 }
